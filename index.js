@@ -1,12 +1,25 @@
 require('dotenv').config()
-
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
 
-app.get("/" , (req,res) => {
+app.use(cookieParser())
+
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+
+
+app.get("/", (req, res) => {
     res.send("slash page")
 })
 
-app.listen( process.env.PORT || 3000 , () => {
+const register = require("./Routes/signUp")
+const login = require("./Routes/login");
+
+app.use("/signup", register)
+app.use("/login", login)
+
+app.listen(process.env.PORT || 3000, () => {
     console.log("App is listening at port 3000");
 })

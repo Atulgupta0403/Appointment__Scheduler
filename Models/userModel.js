@@ -1,34 +1,37 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose")
 
 mongoose.connect(process.env.MONGO_URL)
 
 const userSchema = new mongoose.Schema({
-    firstName : {
-        type : String
+    username: {
+        type: String
     },
-    lastName : {
-        type : String
+    firstName: {
+        type: String
     },
-    email : {
-        type : String
+    lastName: {
+        type: String
     },
-    password : {
-        type : String
+    email: {
+        type: String
     },
-    accountType : {
-        type : String,
-        enum : [patient , doctor , admin],
-        default : patient
+    password: {
+        type: String
     },
-    Specialization : {
-        type : String,
-        require : function() {
+    accountType: {
+        type: String,
+        // enum : [patient , doctor , admin],
+        // default : patient
+    },
+    Specialization: {
+        type: String,
+        require: function () {
             return this.accountType === "doctor"
         },
-        default : null
+        default: null
     },
 
 })
 
 
-module.exports = mongoose.model("User" , userSchema)
+module.exports = mongoose.model("User", userSchema)
