@@ -14,11 +14,13 @@ app.get("/", (req, res) => {
     res.send("slash page")
 })
 
-const register = require("./Routes/signUp")
+const register = require("./Routes/signUp");
 const login = require("./Routes/login");
+const email = require("./Routes/email")
 
 app.use("/signup", register)
 app.use("/login", login)
+app.use("/",email)
 
 app.listen(process.env.PORT || 3000, () => {
     console.log("App is listening at port 3000");

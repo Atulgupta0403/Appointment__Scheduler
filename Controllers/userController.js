@@ -12,7 +12,7 @@ const signUp = async (req, res) => {
         res.json(new ApiError(404, "All fields are required"));
     }
 
-    const user = await userModel.findOne({ $or: [{ username, email }] });
+    const user = await userModel.findOne({ $or: [{username}, {email} ] });
 
     if (user) {
         res.json("Username or email already exist");
