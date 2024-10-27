@@ -6,7 +6,7 @@ const { ApiResponse } = require("../Utils/apiResponse");
 
 
 const signUp = async (req, res) => {
-    const { username, firstName, lastName, email, password } = req.body;
+    const { username, firstName, lastName, email, password , accountType , Specialization } = req.body;
 
     if (!firstName || !lastName || !email || !password) {
         res.json(new ApiError(404, "All fields are required"));
@@ -25,7 +25,9 @@ const signUp = async (req, res) => {
                     firstName,
                     lastName,
                     password: hash,
-                    email
+                    email,
+                    accountType,
+                    Specialization
                 })
                 res.json(new ApiResponse(200, createUser, " User created"))
             });

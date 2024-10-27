@@ -43,7 +43,7 @@ const createAppointement = async (req, res) => {
                     return res.status(500).send(`Error sending email ${error}`);
                 } else {
                     console.log('Email sent: ' + info.response);
-                    res.json(new ApiResponse(200, appointUser , 'Appointement Scheduled'));
+                    res.json(new ApiResponse(200, appointUser, 'Appointement Scheduled'));
                 }
             })
         }
@@ -51,7 +51,18 @@ const createAppointement = async (req, res) => {
     else {
         res.json(new ApiResponse(300, "NotLoggedIn", "please login"));
     }
-
 }
 
-module.exports = { createAppointement }
+
+const showAppointments = async (req, res) => {
+    if (req.user) {
+        const user = await userModel.findOne({ username: req.user.username })
+        const appoint = await AppointementModel.find({Patient_ID : user._id , status : "scheduled"})
+        res.json(new ApiResponse(200 , appoint , "All Appointements"))
+    }
+    else {
+        res.json(new ApiResponse(300, "not LoggedIn", "please login"));
+    }
+}
+
+module.exports = { createAppointement, showAppointments }

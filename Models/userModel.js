@@ -20,19 +20,20 @@ const userSchema = new mongoose.Schema({
     },
     accountType: {
         type: String,
-        // enum : [patient , doctor , admin],
-        // default : patient
+        enum : ["patient" , "doctor" , "admin"],
+        default : "patient"
     },
     Specialization: {
         type: String,
-        require: function () {
+        required : function () {
             return this.accountType === "doctor"
         },
         default: null
     },
     resetToken : {
         type : String,
-        default : null
+        default : null,
+
     },
     resetTokenExpires : {
         type : Date,
