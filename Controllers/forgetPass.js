@@ -53,8 +53,6 @@ const forgetPasswordHandler = async (req, res) => {
 const resetPasswordHandler = async (req,res) => {
     const {resetToken} = req.params;
     const {new_Password} = req.body;
-
-    console.log(resetToken)
     const user = await userModel.findOne({
         resetToken : resetToken,
         resetTokenExpires : { $gt: Date.now() }
@@ -64,19 +62,15 @@ const resetPasswordHandler = async (req,res) => {
         res.json(new ApiResponse(400 , user , "Password reset token is invalid or has expired."))
     }
     else{
-        bcrypt.genSalt(10 , (err , salt)=> {
-            bcrypt.hash(new_Password, salt , async (err , hash) => {
-                
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(new_Password, salt, async function(err, hash) {
                 user.password = hash;
                 user.resetToken = null;
                 user.resetTokenExpires = null;
                 await user.save();
-                
-            })
-        })
-
-
-        res.json(new ApiResponse(200 , null , "Password reset done"))
+            });
+        });
+        res.json(new ApiResponse(200 , user , "Password reset done"))
     }
 }
 
