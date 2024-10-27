@@ -16,11 +16,13 @@ app.get("/", (req, res) => {
 
 const register = require("./Routes/signUp");
 const login = require("./Routes/login");
-const email = require("./Routes/email")
+const email = require("./Routes/email");
+const Appointement = require("./Routes/Appointement");
 
 app.use("/signup", register)
 app.use("/login", login)
-app.use("/",email)
+app.use("/", email)
+app.use("/", Appointement)
 
 app.listen(process.env.PORT || 3000, () => {
     console.log("App is listening at port 3000");

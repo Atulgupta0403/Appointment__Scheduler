@@ -45,7 +45,7 @@ const login = async (req, res) => {
         bcrypt.compare(password, user.password, function (err, result) {
             console.log(result)
             if (result) {
-                const token = jwt.sign({username}, process.env.SECRET, { expiresIn: 1 })
+                const token = jwt.sign({username}, process.env.SECRET)
                 console.log(token)
                 res.cookie("token", token)
                 res.json(`Welcome , ${username}`)

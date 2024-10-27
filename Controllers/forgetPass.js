@@ -27,14 +27,14 @@ const forgetPasswordHandler = async (req, res) => {
         user.resetTokenExpires = Date.now() + 3600000;
         await user.save()
 
-        const resetUrl = `http://localhost:3000/reset-password/${resetToken}`
+        const resetUrl = `http://localhost:3000/password/reset/${resetToken}`
 
         const mailOptions = {
             from: "atulgupta0403@gmail.com",
             to: email,
             subject: 'Password Reset Request',
             text: `You requested a password reset. Click the link to reset your password: ${resetUrl}`,
-            html: `<p>You requested a password reset. http://localhost:3000/reset-password/${resetToken}`
+            html: `<p>You requested a password reset. http://localhost:3000/password/reset/${resetToken}`
         };
 
 
