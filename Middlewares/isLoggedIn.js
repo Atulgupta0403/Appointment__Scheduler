@@ -9,7 +9,7 @@ const isLoggedIn = (req,res,next) => {
         req.user = data;
     }
     else{
-        res.json(new ApiResponse(200 , NotLoggedIn , "pls login"))
+        res.json(new ApiResponse(200 , "NotLoggedIn" , "pls login"))
     }
 
     next();

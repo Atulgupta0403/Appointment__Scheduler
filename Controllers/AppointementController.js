@@ -46,7 +46,7 @@ const createAppointement = async (req, res) => {
                     from: process.env.USER,
                     to: user.email,
                     subject: 'Appointement Scheduled',
-                    text: `Your appointement should be scheduled by doctorId = ${doctor_Id}`,
+                    text: `Your appointement should be scheduled by do  ctorId = ${doctor_Id}`,
                 };
 
                 transporter.sendMail(mailOptions, (error, info) => {
