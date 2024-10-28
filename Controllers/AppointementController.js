@@ -3,6 +3,33 @@ const userModel = require("../Models/userModel");
 const { ApiResponse } = require("../Utils/apiResponse");
 const nodeMailer = require("nodemailer");
 
+const sendMail = (email1 , email2 , date) => {
+    const transporter = nodeMailer.createTransport({
+        service : "gmail",
+        secure : true,
+        auth : {
+            user : process.env.USER,
+            pass : process.env.PASS            
+        }
+    })
+
+    const mailOptions = {
+        from : "atulgupta0403@gmail.com",
+        to : [email2 ,email1],
+        subject : "Rescheduled Date",
+        text : `Rescheduled on date ${date}`
+    }
+
+    transporter.sendMail(mailOptions , (err , info) => {
+        if(err) {
+            console.log("error from sending mail = " , err)
+        }
+        else{
+            console.log("Email Sent")
+        }
+    })
+}
+
 
 const createAppointement = async (req, res) => {
     // console.log("controller se" , req.user)
@@ -78,4 +105,33 @@ const showAppointments = async (req, res) => {
     }
 }
 
-module.exports = { createAppointement, showAppointments }
+const appointementReschedule = async (req, res) => {
+
+    if (req.user) {
+        const appointment_id = req.query.appointment_id;
+        const {new_date} = req.body;
+        const patient = await userModel.findOne({ username: req.user.username , accountType: "patient" })
+        if(patient){
+            const appoint = await AppointementModel.findOne({ appointment_id: appointment_id , status : "scheduled" , Patient_ID: patient._id })
+            if(appoint){
+                const doctor = await userModel.findOne({ _id : appoint.Doctor_ID})
+                appoint.Appointment_Date = new_date;
+                await appoint.save();
+                console.log(doctor.email)
+                sendMail(patient.email , doctor.email , new_date);
+                res.json(new ApiResponse(200 , appoint , "rescheduled done"))
+            }
+            else{
+                res.json(new ApiResponse(200 , `No scheduled appointement on appointement_Id = ${appointment_id}`))
+            }
+        }
+        else{
+            res.json(new ApiResponse(200 , "you are not authorized to reschedule the appointement "))
+        }
+    }
+    else{
+        res.json(new ApiResponse(200 , "Not loggedIn" , "please login"))
+    }
+}
+
+module.exports = { createAppointement, showAppointments , appointementReschedule}
