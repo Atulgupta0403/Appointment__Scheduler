@@ -31,7 +31,7 @@ const updateData = async (req, res) => {
             res.json(new ApiResponse(200, "you are not authorized too change the data"))
         }
         else {
-            const user = await AppointementModel.findOne({ appointment_id });
+            const user = await AppointementModel.findOne({ appointment_id , Doctor_ID : doctor._id });
             user.status = "completed"
             await user.save();
             res.json(new ApiResponse(200, user, "changed"))

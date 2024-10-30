@@ -10,7 +10,7 @@ passport.use(
     new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "https://appointment-scheduler-jg0c.onrender.com/auth/google/callback"
+        callbackURL: "https://appointment-scheduler-8na4.onrender.com/auth/google/callback"
     },
         (accessToken, refreshToken, profile, done) => {
             return done(null, profile)
