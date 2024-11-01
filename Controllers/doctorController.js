@@ -31,7 +31,7 @@ const updateData = async (req, res) => {
             res.json(new ApiResponse(200, "you are not authorized too change the data"))
         }
         else {
-            const user = await AppointementModel.findOne({ appointment_id , Doctor_ID : doctor._id });
+            const user = await AppointementModel.findOne({ appointment_id, Doctor_ID: doctor._id });
             user.status = "completed"
             await user.save();
             res.json(new ApiResponse(200, user, "changed"))
@@ -43,4 +43,21 @@ const updateData = async (req, res) => {
 }
 
 
-module.exports = { getDoctor, updateData };
+const doctorAvailability = async (req, res) => {
+    const doctor_Id = req.query.doctor_Id;
+    if (req.user) {
+        const patient = await userModel.findOne({ username: req.user.username, accountType: "patient" })
+        if (patient) {
+            const doctor = await userModel.findOne({ _id: doctor_Id });
+            res.json(new ApiResponse(200, `Doctor are not-avilable on ${doctor.Appointments} of ${doctor.Specialization} Specialization.`))
+        }
+        else {
+            res.json(new ApiResponse(200, "patient", "Only patient are authorized too see the details... "));
+        }
+    }
+    else {
+        res.json(new ApiResponse(200, "not loggedIn", "please login"))
+    }
+}
+
+module.exports = { getDoctor, updateData, doctorAvailability };

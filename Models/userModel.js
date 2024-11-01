@@ -38,7 +38,12 @@ const userSchema = new mongoose.Schema({
     resetTokenExpires : {
         type : Date,
         default : null
-    }
+    },
+    Appointments : [
+        {
+            type : Date 
+        }
+    ]
 
 })
 

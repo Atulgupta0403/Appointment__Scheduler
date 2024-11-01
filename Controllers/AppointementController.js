@@ -39,6 +39,9 @@ const createAppointement = async (req, res) => {
         const { appointment_id } = req.body;
         const user = await userModel.findOne({ username: req.user.username });
         const appoint = await AppointementModel.findOne({ appointment_id: appointment_id, Patient_ID: user._id });
+        const doctor =  await userModel.findOne({ _id : doctor_Id })
+
+        console.log("doctor " , doctor);
 
         if (appoint) {
             console.log(appoint)
@@ -56,8 +59,11 @@ const createAppointement = async (req, res) => {
                     Patient_ID: user._id,
                     Doctor_ID: doctor_Id,
                     Appointment_Date: Date.now(),
-                    appointment_id: appointment_id
+                    appointment_id: appointment_id,
                 })
+
+                doctor.Appointments.push(Date.now());
+                await doctor.save()
 
                 const transporter = nodeMailer.createTransport({
                     service: "gmail",
