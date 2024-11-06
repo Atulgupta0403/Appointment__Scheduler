@@ -8,13 +8,16 @@ const { ApiResponse } = require("../Utils/apiResponse");
 const signUp = async (req, res) => {
     const { username, firstName, lastName, email, password , accountType , Specialization } = req.body;
 
-    if (!firstName || !lastName || !email || !password) {
-        res.json(new ApiError(404, "All fields are required"));
+    if (!firstName || !lastName || !email || !password || !username) {
+        res.json(new ApiResponse(505, "All fields are required" , false , false));
     }
 
     const user = await userModel.findOne({ $or: [{username}, {email} ] });
+    if(password.length <= 6){
+        res.json(new ApiResponse(200 , "Password must be greater than 6 letter"))
+    }
 
-    if (user) {
+    else if (user) {
         res.json("Username or email already exist");
     }
     else {
