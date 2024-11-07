@@ -4,19 +4,26 @@ mongoose.connect(process.env.MONGO_URL)
 
 const userSchema = new mongoose.Schema({
     username: {
-        type: String
+        type: String,
+        unique : true,
+        required : true
     },
     firstName: {
-        type: String
+        type: String,
+        required : true
     },
     lastName: {
-        type: String
+        type: String,
+        required : true
     },
     email: {
-        type: String
+        type: String,
+        required : true,
+        unique : true
     },
     password: {
-        type: String
+        type: String,
+        required : true
     },
     accountType: {
         type: String,
