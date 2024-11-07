@@ -45,7 +45,7 @@ const createAppointement = async (req, res) => {
 
         if (appoint) {
             console.log(appoint)
-            res.json("Apointement Id already exist")
+            res.json(new ApiResponse(400 , "Apointement Id already exist" , "please try another appointement id"))
         }
 
         else {

@@ -18,12 +18,12 @@ const signUp = async (req, res) => {
     }
 
     else if (user) {
-        res.json("Username or email already exist");
+        res.json(new ApiResponse(200 , "Username or email already exist"));
     }
     else {
         bcrypt.genSalt(10, function (err, salt) {
             bcrypt.hash(password, salt, async function (err, hash) {
-                const createUser = await userModel.create({
+                const User = await userModel.create({
                     username,
                     firstName,
                     lastName,
@@ -32,7 +32,9 @@ const signUp = async (req, res) => {
                     accountType,
                     Specialization
                 })
-                res.json(new ApiResponse(200, createUser, " User created"))
+
+                const createdUser = await userModel.findOne({_id : User._id}).select("-password -resetToken -resetTokenExpires")
+                res.json(new ApiResponse(200, createdUser, " User created"))
             });
         });
     }
@@ -44,7 +46,7 @@ const login = async (req, res) => {
     const user = await userModel.findOne({ username });
     console.log(user)
     if (!user) {
-        res.json(`User not found with the username : ${username}`)
+        res.json(new ApiResponse(400 , `User not found with the username : ${username}` , "failed"));
     }
     else {
         bcrypt.compare(password, user.password, function (err, result) {
@@ -56,7 +58,7 @@ const login = async (req, res) => {
                 res.json(`Welcome , ${username}`)
             }
             else {
-                res.json("Incorrect password");
+                res.json(new ApiResponse(400 , "Incorrect password" , "try another password"));
             }
         })
     }

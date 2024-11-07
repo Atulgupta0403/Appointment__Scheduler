@@ -14,7 +14,7 @@ const getDoctor = async (req, res) => {
             res.json(new ApiResponse(200, doctor, `there are ${length} doctor of ${Specialization} Specialization `))
         }
         else {
-            res.json("You are not authorized too see the doctors ");
+            res.json(new ApiResponse(400 , "You are not authorized too see the doctors " , "Only patient can see the doctors"));
         }
     }
     else {
