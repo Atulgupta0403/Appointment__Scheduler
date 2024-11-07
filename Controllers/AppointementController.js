@@ -30,22 +30,28 @@ const sendMail = (email1, email2, date) => {
     })
 }
 
+const count = async () => {
+    const appoint = await AppointementModel.find();
+    return appoint.length
+    // console.log(appoint.length + "this is length of appoint")
+}
 
 const createAppointement = async (req, res) => {
     // console.log("controller se" , req.user)
     if (req.user) {
 
         const doctor_Id = req.query.doctor_Id;
-        const { appointment_id } = req.body;
+        const appointment_id = await count() + 1;
         const user = await userModel.findOne({ username: req.user.username });
         const appoint = await AppointementModel.findOne({ appointment_id: appointment_id, Patient_ID: user._id });
         const doctor =  await userModel.findOne({ _id : doctor_Id })
 
         console.log("doctor " , doctor);
+        
 
         if (appoint) {
             console.log(appoint)
-            res.json(new ApiResponse(400 , "Apointement Id already exist" , "please try another appointement id"))
+            res.json(new ApiResponse(400 , "Apointement Id already exist" , "please try another appointement id"));
         }
 
         else {
@@ -55,12 +61,14 @@ const createAppointement = async (req, res) => {
             }
 
             else {
-                const appointUser = await AppointementModel.create({
+                const User = await AppointementModel.create({
                     Patient_ID: user._id,
                     Doctor_ID: doctor_Id,
                     Appointment_Date: Date.now(),
                     appointment_id: appointment_id,
                 })
+
+                const appointUser = await AppointementModel.findOne({ _id : User._id }).select("-createdAt -updatedAt -_id");
 
                 doctor.Appointments.push(Date.now());
                 await doctor.save()
