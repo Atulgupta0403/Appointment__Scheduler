@@ -4,12 +4,15 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const passport = require('passport');
 const session = require("express-session")
+const path = require("path");
 
 app.use(cookieParser())
 
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname , "public")))
 
 app.use(session({
     secret: process.env.SECRET,
@@ -18,13 +21,14 @@ app.use(session({
 }))
 
 
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.get("/", (req, res) => {
-    res.send("<a href='/auth/google'> Login with google </a>")
+    res.send("<a href='/auth/google'> Login with google </a>");
 })
+
 
 const register = require("./Routes/signUp");
 const login = require("./Routes/login");

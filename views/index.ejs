@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./Stylesheet/style.css">
+</head>
+<body>
+    <h1>SignUp</h1>
+    <form action="/signup" method="post">
+        <input type="text" placeholder="Enter username" name="username">
+        <input type="text" placeholder="First name" name="firstName">
+        <input type="text" placeholder="Last name" name="lastName">
+        <input type="email" placeholder="Enter email" name="email">
+        <input type="password" placeholder="Enter password" name="password">
+        
+        <div class="reCaptcha">
+            <input class="matching" type="text" placeholder="Enter reCaptcha" name="reCaptcha">
+        </div>
+        <button style="cursor: pointer;" type="submit">Register</button>
+    </form>
+
+    <script src="./Javasscript/script.js"></script>
+</body>
+</html>

@@ -7,7 +7,8 @@ const { ApiResponse } = require("../Utils/apiResponse");
 
 const signUp = async (req, res) => {
     const { username, firstName, lastName, email, password , accountType , Specialization } = req.body;
-
+    const { reCaptcha } = req.body;
+    console.log(username , reCaptcha , firstName , lastName , email )
     if (!firstName || !lastName || !email || !password || !username) {
         res.json(new ApiResponse(505, "All fields are required" , false , false));
     }
