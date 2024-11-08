@@ -1,6 +1,7 @@
 const btn = document.querySelector("button")
 const reCaptcha = document.querySelector(".reCaptcha")
 const matching = document.querySelector(".reCaptcha .matching")
+const form = document.querySelector("form");
 
 
 const randomNumber = () => {
@@ -23,6 +24,10 @@ btn.addEventListener("click" , () => {
         btn.type = "submit"
     }
     else{
+        const notify = document.createElement("p");
+        notify.innerText = "Incorrect ReCaptcha !!! Try Again."
+        form.appendChild(notify)
+        notify.style.color = "red"
         btn.type = "reset"
         console.log("bad")
     }
