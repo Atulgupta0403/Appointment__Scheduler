@@ -9,13 +9,19 @@
 <body>
     <h1>SignUp</h1>
     <form action="/signup" method="post">
-        <input type="text" placeholder="Enter username" name="username">
-        <input type="text" placeholder="First name" name="firstName">
-        <input type="text" placeholder="Last name" name="lastName">
-        <input type="email" placeholder="Enter email" name="email">
-        <input type="password" placeholder="Enter password" name="password">
+        <div class="inputs">
+            <input type="text" placeholder="Enter username" name="username">
+            <input type="text" placeholder="First name" name="firstName">
+            <input type="text" placeholder="Last name" name="lastName">
+            <input type="email" placeholder="Enter email" name="email">
+            <input type="password" placeholder="Enter password" name="password">
+            <input type="text" placeholder="accountType" name="accountType" class="accountType">
+            <input type="text" placeholder="Specialization" name="Specialization" class="Specialization display">
+
+        </div>
         
         <div class="reCaptcha">
+            <div>Enter reCaptcha :-</div>
             <input class="matching" type="text" placeholder="Enter reCaptcha" name="reCaptcha">
         </div>
         <button style="cursor: pointer;" type="submit">Register</button>
