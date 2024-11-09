@@ -11,7 +11,12 @@ const getDoctor = async (req, res) => {
         if (user.accountType === "patient") {
             const doctor = await userModel.find({ Specialization: Specialization })
             const length = doctor.length;
-            res.json(new ApiResponse(200, doctor, `there are ${length} doctor of ${Specialization} Specialization `))
+            console.log(doctor)
+            // res.render('getDoctor' , { data : doctor.map((elem) => {
+            //     return elem
+            // })})
+            res.render('getDoctor' , {data : doctor , Specialization})
+            // res.json(new ApiResponse(200, doctor, `there are ${length} doctor of ${Specialization} Specialization `))
         }
         else {
             res.json(new ApiResponse(400 , "You are not authorized too see the doctors " , "Only patient can see the doctors"));
