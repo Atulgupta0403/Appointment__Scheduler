@@ -64,7 +64,7 @@ const createAppointement = async (req, res) => {
                 const User = await AppointementModel.create({
                     Patient_ID: user._id,
                     Doctor_ID: doctor_Id,
-                    Appointment_Date: Date.now(),
+                    Appointment_Date:new Date().toLocaleDateString('en-CA'),
                     appointment_id: appointment_id,
                 })
 
@@ -113,7 +113,10 @@ const showAppointments = async (req, res) => {
     if (req.user) {
         const user = await userModel.findOne({ username: req.user.username })
         const appoint = await AppointementModel.find({ Patient_ID: user._id, status: "scheduled" })
-        res.json(new ApiResponse(200, appoint, "All Appointements"))
+        console.log(appoint)
+        console.log(user)
+        res.render('showAppointement' , {data : appoint , username : user.username})
+        // res.json(new ApiResponse(200, appoint, "All Appointements"))
     }
     else {
         res.json(new ApiResponse(300, "not LoggedIn", "please login"));

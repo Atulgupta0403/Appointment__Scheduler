@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome , <%=username %> , your appointments are...</h1>
+    <div class="container" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+
+        <% data.map((elem) => { %>
+            <div class="card" style="padding: 10px; border: 2px solid black; width: fit-content; display: flex; flex-direction: column; gap: 5px;">
+                
+                <span>Doctor_ID = 
+                    <%= elem.Doctor_ID %>
+                </span>
+                <span>Appointment_Date = 
+                    <%= elem.Appointment_Date %>
+                </span>
+                <span>status = 
+                    <%= elem.status %>
+            </span>
+            <span>appointment_id = 
+                <%= elem.appointment_id %>
+            </span>
+        </div>
+        <% }) %>
+    </div>
+</body>
+</html>
